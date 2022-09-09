@@ -58,6 +58,20 @@ const Navigation = () => {
             >
               Blog
             </Link>
+
+            <Link
+              to="/?lng=en"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              {t("English")}
+            </Link>
+
+            <Link
+              to="/?lng=es"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              {t("Spanish")}
+            </Link>
           </div>
         </div>
       </div>
