@@ -2,7 +2,6 @@ import Layout from "../components/Layout";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
-import sessionStorage from "~/sessionStorage";
 
 import {
   getStoryblokApi,
@@ -25,25 +24,11 @@ export const loader = async ({ request, params }) => {
   let slug = params["*"] ?? "home";
   slug = slug.endsWith("/") ? slug.slice(0, -1) : slug;
 
-  let session = await sessionStorage.getSession();
-  const selectedLanguage = new URL(request.url).searchParams.get("lng");
-
-  console.log(selectedLanguage);
-
-  if (selectedLanguage) {
-    session.set("lng", selectedLanguage);
-  }
-
-  request = new Request(request.url, {
-    headers: { Cookie: await sessionStorage.commitSession(session) },
-  });
-
   let locale = await i18next.getLocale(request);
-
-  console.log(locale);
 
   let sbParams = {
     version: "draft",
+    language: locale,
   };
 
   const storyblokApi = getStoryblokApi();

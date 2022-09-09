@@ -1,15 +1,25 @@
 import ArticleTeaser from "./ArticleTeaser";
 import { getStoryblokApi, storyblokEditable } from "@storyblok/react";
+import { useTranslation } from "react-i18next";
 
 import { useState, useEffect } from "react";
 
 const AllArticles = ({ blok }) => {
   const [articles, setArticles] = useState([]);
+  let { i18n } = useTranslation();
 
   useEffect(() => {
     async function fetchData() {
+      let sbParams = {
+        version: "draft",
+        language: i18n.language,
+      };
+
       const storyblokApi = getStoryblokApi();
-      let { data } = await storyblokApi.get(`cdn/stories?starts_with=blog/`);
+      let { data } = await storyblokApi.get(
+        `cdn/stories?starts_with=blog/`,
+        sbParams
+      );
       let filteredArticles = data.stories.filter((a) => a.name != "Blog");
 
       setArticles(() =>

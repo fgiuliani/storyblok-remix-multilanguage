@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 
 const Navigation = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const { pathname } = useLocation();
+
   let { t } = useTranslation();
 
   return (
@@ -60,14 +62,14 @@ const Navigation = () => {
             </Link>
 
             <Link
-              to="/?lng=en"
+              to={"/change-language?language=en&redirectUrl=" + pathname}
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
               {t("English")}
             </Link>
 
             <Link
-              to="/?lng=es"
+              to={"/change-language?language=es&redirectUrl=" + pathname}
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
               {t("Spanish")}
@@ -123,9 +125,26 @@ const Navigation = () => {
                     to="/blog"
                     className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
                   >
-                    {/* <!-- Heroicon name: outline/cursor-click --> */}
                     <span className="ml-3 text-base font-medium text-gray-900">
                       Blog
+                    </span>
+                  </Link>
+
+                  <Link
+                    to={"/change-language?language=en&redirectUrl=" + pathname}
+                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                  >
+                    <span className="ml-3 text-base font-medium text-gray-900">
+                      {t("English")}
+                    </span>
+                  </Link>
+
+                  <Link
+                    to={"/change-language?language=es&redirectUrl=" + pathname}
+                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                  >
+                    <span className="ml-3 text-base font-medium text-gray-900">
+                      {t("Spanish")}
                     </span>
                   </Link>
                 </nav>
